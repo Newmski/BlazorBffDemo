@@ -1,0 +1,29 @@
+﻿@page "/"
+@using BlazorBffDemo.BlazorClient.Client.Services
+@inject FlexItApiService FlexItApiService
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, Blazor BFF!</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <dl>
+            @foreach (var claim in @context.User.Claims)
+            {
+                <dt>@claim.Type</dt>
+                <dd>@claim.Value</dd>
+            }
+        </dl>
+        
+        <button type="button" class="btn btn-primary" @onclick="HandleClick">Call Api</button>
+    </Authorized>
+</AuthorizeView>
+
+@code
+{
+    public async Task HandleClick()
+    {
+        await FlexItApiService.CallApiAsync();
+    }
+}
